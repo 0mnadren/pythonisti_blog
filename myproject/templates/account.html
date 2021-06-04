@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div align="center">
+            <h1>Welcome {{ current_user.username|capitalize }}</h1>
+            <img align="center"
+                 src="{{ profile_image }}"
+                 alt="Profile picture"
+                 width="200"
+                 height="200">
+        </div>
+    </div>
+    <div class="container">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }} {{ form.username(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }} {{ form.email(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.picture.label(class="form-label") }} {{ form.picture(class="form-control") }}
+                <div class="form-text">
+                    Picture must be .jpg or .png
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form.submit(class="btn btn-primary") }}
+                <button type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#del_account">
+                    Delete Account
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="modal" tabindex="-1" id="del_account">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete Account?</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>Are you sure you want to delete the account?</h5>
+              <p>This change is permanent!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+
+              <form action="{{ url_for('users.delete_account') }}">
+                  <input type="submit" value="Delete" class="btn btn-danger">
+              </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
