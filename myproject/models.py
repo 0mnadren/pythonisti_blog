@@ -22,6 +22,19 @@ class User(db.Model, UserMixin):
 
     comments = db.relationship('Comment', backref='author', lazy=True, cascade="all, delete-orphan")
 
+    send_messages = db.relationship(
+        'Message',
+        backref='sender',
+        foreign_keys='Message.sender_id',
+        lazy=True,
+        cascade="save-update")
+    receive_messages = db.relationship(
+        'Message',
+        backref='receiver',
+        foreign_keys='Message.receiver_id',
+        lazy=True,
+        cascade="save-update")
+
     def __init__(self, email, username, password):
         self.email = email
         self.username = username
@@ -76,6 +89,31 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'Comment ID: {self.id} -- Blog ID: {self.blog_id} -- User ID {self.user_id}'
+
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(125), nullable=False, index=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
+    text = db.Column(db.Text, nullable=False, index=True)
+    seen = db.Column(db.Boolean, nullable=False, default=False, index=True)
+
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __init__(self, title, text, sender_id, receiver_id):
+        self.title = title
+        self.text = text
+        self.sender_id = sender_id
+        self.receiver_id = receiver_id
+
+    def __repr__(self):
+        return f'Message: {self.title} -- from sender ID {self.sender_id}'
+
+
 
 
 

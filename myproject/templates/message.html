@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>Message</h1>
+    <h4>From: {{ message.sender.username|capitalize }}</h4>
+    <h5>Title: {{ message.title }}</h5>
+    <h5>Date Sent: {{ message.date.strftime("%d/%m/%Y, %H:%M:%S") }}</h5>
+    <p>Message: {{ message.text }}</p>
+    <a href="{{ url_for('messages.create_message') }}" class="btn btn-warning">Replay</a>
+  </div>
+
+{% endblock %}

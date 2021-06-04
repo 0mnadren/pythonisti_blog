@@ -4,7 +4,11 @@
 
     <div class="jumbotron">
         <h1>{{ title }}</h1>
-        <h2>Written by: {{ post.author.username|capitalize }}</h2>
+        <h2>
+            Written by:
+            <img src="{{ url_for('static', filename='profile_pics/'+post.author.profile_image) }}" height="50" width="50" alt="Profile Picture">
+            {{ post.author.username|capitalize }}
+        </h2>
         <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
         <p>{{ post.text }}</p>
 
@@ -53,7 +57,11 @@
 
     {% for comment in comments %}
     <div class="jumbotron">
-        <h3>Written by: {{ comment.author.username|capitalize }}</h3>
+        <h3>
+            Written by:
+            <img src="{{ url_for('static', filename='profile_pics/'+comment.author.profile_image) }}" height="30" width="30" alt="Profile Picture">
+            {{ comment.author.username|capitalize }}
+        </h3>
         <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
         <p>{{ comment.text }}</p>
     </div>

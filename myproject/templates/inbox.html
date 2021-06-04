@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>Inbox</h1>
+  </div>
+<div class="row">
+  <div class="col-1">
+    <a href="{{ url_for('messages.create_message') }}" class="btn btn-warning">Compose</a>
+    <a href="{{ url_for('messages.inbox') }}"><h5>Inbox</h5></a>
+    <a href="{{ url_for('messages.sent_messages') }}"><h5>Sent</h5></a>
+  </div>
+  {% for message in messages %}
+    {% if current_user.id == message.receiver.id %}
+    <div class="col-11">
+        <div class="card" style="width: 100%;">
+          <div class="card-body">
+            <h6 class="card-title">From: {{ message.sender.username|capitalize }} Title: {{ message.title|capitalize }}</h6><label class="card-subtitle mb-2 text-muted">{{ message.date.strftime("%d-%B-%Y") }}</label>
+            <a href="{{ url_for('messages.view_message', message_id=message.id) }}" class="card-link">Check Message</a>
+                        <button type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#del_message">
+                    Delete Message
+                </button>
+            <div class="modal" tabindex="-1" id="del_message">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete Message?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete the message?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+
+                    <form action="{{ url_for('messages.delete_message', message_id=message.id) }}">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+
+</div>
+
+{% endblock %}
