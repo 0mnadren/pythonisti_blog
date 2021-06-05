@@ -10,9 +10,10 @@
     <a href="{{ url_for('messages.inbox') }}"><h5>Inbox</h5></a>
     <a href="{{ url_for('messages.sent_messages') }}"><h5>Sent</h5></a>
   </div>
-  {% for message in messages %}
-    {% if current_user.id == message.receiver.id %}
+
     <div class="col-11">
+      {% for message in messages %}
+      {% if current_user.id == message.receiver.id %}
         <div class="card" style="width: 100%;">
           <div class="card-body">
             <h6 class="card-title">From: {{ message.sender.username|capitalize }} Title: {{ message.title|capitalize }}</h6><label class="card-subtitle mb-2 text-muted">{{ message.date.strftime("%d-%B-%Y") }}</label>
@@ -46,10 +47,9 @@
           </div>
           </div>
         </div>
+      {% endif %}
+    {% endfor %}
     </div>
-    {% endif %}
-  {% endfor %}
-
 </div>
 
 {% endblock %}

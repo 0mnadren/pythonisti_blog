@@ -28,7 +28,7 @@ def create_comment(blog_post_id):
 @login_required
 def update_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
-    if comment.author != current_user:
+    if comment.comment_author != current_user:
         abort(403)
 
     form = CommentForm()
@@ -46,7 +46,7 @@ def update_comment(comment_id):
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
-    if comment.author != current_user:
+    if comment.comment_author != current_user:
         abort(403)
     db.session.delete(comment)
     db.session.commit()

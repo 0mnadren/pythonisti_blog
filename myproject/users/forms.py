@@ -4,7 +4,6 @@ from wtforms.validators import InputRequired, Email, EqualTo, Length
 from flask_wtf.file import FileField, FileAllowed
 # A file field and allowed are going to let us have the user update jpeg or png file
 
-from flask_login import current_user
 from myproject.models import User
 
 

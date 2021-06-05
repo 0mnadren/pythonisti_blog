@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
 
     posts = db.relationship('Blog', backref='author', lazy=True, cascade="all, delete-orphan")
 
-    comments = db.relationship('Comment', backref='author', lazy=True, cascade="all, delete-orphan")
+    comments = db.relationship('Comment', backref='comment_author', lazy=True, cascade="all, delete-orphan")
 
     send_messages = db.relationship(
         'Message',

@@ -59,13 +59,13 @@
     <div class="jumbotron">
         <h3>
             Written by:
-            <img src="{{ url_for('static', filename='profile_pics/'+comment.author.profile_image) }}" height="30" width="30" alt="Profile Picture">
-            {{ comment.author.username|capitalize }}
+            <img src="{{ url_for('static', filename='profile_pics/'+comment.comment_author.profile_image) }}" height="30" width="30" alt="Profile Picture">
+            {{ comment.comment_author.username|capitalize }}
         </h3>
         <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
         <p>{{ comment.text }}</p>
     </div>
-        {% if comment.author == current_user %}
+        {% if comment.comment_author == current_user %}
             <div>
                 <a href="{{ url_for('comments.update_comment', comment_id=comment.id) }}" class="btn btn-outline-primary">Update Comment</a>
                 <button type="button"
