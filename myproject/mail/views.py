@@ -5,7 +5,7 @@ from myproject.models import Message, User
 from myproject.mail.forms import MessageForm
 
 
-messages_blueprint = Blueprint('messages', __name__)
+messages_blueprint = Blueprint('messages', __name__, template_folder='templates/mail')
 
 
 @messages_blueprint.route('/inbox')

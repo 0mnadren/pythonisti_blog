@@ -7,7 +7,9 @@
         <h2>
             Written by:
             <img src="{{ url_for('static', filename='profile_pics/'+post.author.profile_image) }}" height="50" width="50" alt="Profile Picture">
-            {{ post.author.username|capitalize }}
+            <a href="{{ url_for('users.user_posts', username=post.author.username) }}">
+                {{ post.author.username|capitalize }}
+            </a>
         </h2>
         <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
         <p>{{ post.text }}</p>
@@ -60,7 +62,9 @@
         <h3>
             Written by:
             <img src="{{ url_for('static', filename='profile_pics/'+comment.comment_author.profile_image) }}" height="30" width="30" alt="Profile Picture">
-            {{ comment.comment_author.username|capitalize }}
+            <a href="{{ url_for('users.user_posts', username=comment.comment_author.username) }}">
+                {{ comment.comment_author.username|capitalize }}
+            </a>
         </h3>
         <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
         <p>{{ comment.text }}</p>

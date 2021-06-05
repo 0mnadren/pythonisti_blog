@@ -5,7 +5,7 @@ from myproject.models import Blog, Comment
 from myproject.blogs.forms import BlogPostForm
 
 
-blogs_blueprint = Blueprint('blogs', __name__)
+blogs_blueprint = Blueprint('blogs', __name__, template_folder='templates/blogs')
 
 
 # Create

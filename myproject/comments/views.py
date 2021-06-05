@@ -4,7 +4,7 @@ from flask import redirect, render_template, url_for, Blueprint, abort, request,
 from myproject.models import Comment
 from .forms import CommentForm
 
-comments_blueprint = Blueprint('comments', __name__)
+comments_blueprint = Blueprint('comments', __name__, template_folder='templates/comments')
 
 
 # Create
@@ -24,7 +24,7 @@ def create_comment(blog_post_id):
     return render_template('create_comment.html', form=form)
 
 
-@comments_blueprint.route('/comment/<comment_id>', methods=['GET', 'POST'])
+@comments_blueprint.route('/<comment_id>', methods=['GET', 'POST'])
 @login_required
 def update_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
@@ -42,7 +42,7 @@ def update_comment(comment_id):
     return render_template('create_comment.html', form=form)
 
 
-@comments_blueprint.route('/comment/<comment_id>/delete', methods=['GET', 'POST'])
+@comments_blueprint.route('/<comment_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)

@@ -3,8 +3,8 @@
 {% block content %}
   <div class="container">
     <div align='center' class="jumbotron">
-      <h1>Welcome to {{ user.username|capitalize }} page</h1>
-      <img src="{{ url_for('static', filename='profile_pics/'+user.profile_image) }}" alt="">
+      <h1>Welcome to {{ user.username|capitalize }}'s posts</h1>
+      <img src="{{ url_for('static', filename='profile_pics/'+user.profile_image) }}" alt="profile picture" width="200" height="200">
     </div>
     {% for post in blog_posts.items %}
       <h2><a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h2>

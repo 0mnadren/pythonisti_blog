@@ -32,9 +32,9 @@ from myproject.mail.views import messages_blueprint
 app.register_blueprint(cores_blueprint)
 app.register_blueprint(error_pages_blueprint)
 app.register_blueprint(users_blueprint)
-app.register_blueprint(blogs_blueprint)
-app.register_blueprint(comments_blueprint)
-app.register_blueprint(messages_blueprint)
+app.register_blueprint(blogs_blueprint, url_prefix='/blogs')
+app.register_blueprint(comments_blueprint, url_prefix='/comments')
+app.register_blueprint(messages_blueprint, url_prefix='/mail')
 
 login_manager.init_app(app)
 login_manager.login_view = 'users.login'
