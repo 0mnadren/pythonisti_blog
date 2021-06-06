@@ -11,7 +11,6 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 @messages_blueprint.route('/inbox')
 @login_required
 def inbox():
-    print(Message.query.all())
     messages = Message.query.filter_by(receiver_id=current_user.id).all()
     return render_template('inbox.html', messages=messages)
 
@@ -37,7 +36,6 @@ def create_message():
         )
         db.session.add(message)
         db.session.commit()
-        print(form.receiver.data)
         flash('Message Sent!')
         return redirect(url_for('messages.inbox'))
     return render_template('create_message.html', form=form)

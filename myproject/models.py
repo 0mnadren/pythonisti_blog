@@ -1,3 +1,5 @@
+import json
+
 from myproject import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -64,6 +66,17 @@ class Blog(db.Model):
         self.title = title
         self.text = text
         self.user_id = user_id
+
+    def json(self):
+        return {
+            'blog': [
+                {'id': self.id},
+                {'author': self.author.username},
+                {'date': json.dumps(self.date.isoformat())},
+                {'title': self.title},
+                {'text': self.text}
+            ]
+        }
 
     def __repr__(self):
         return f'Post ID: {self.id} -- Date: {self.date} -- {self.title}'

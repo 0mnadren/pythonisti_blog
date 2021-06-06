@@ -3,6 +3,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_restful import Api, Resource
+from flask_jwt import JWT
+
 
 login_manager = LoginManager()
 app = Flask(__name__)
@@ -18,6 +21,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 Migrate(app, db)
+
+
+##################################
+############ API #################
+#################################
+from .api.secure_check import authenticate, identity
+
+api = Api(app)
+jwt = JWT(app, authenticate, identity)
+
 
 #################################
 ######### BLUEPRINTS ############
