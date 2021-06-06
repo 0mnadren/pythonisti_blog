@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from myproject import db
 from myproject.models import Message, User
 from myproject.mail.forms import MessageForm
+from sqlalchemy import and_
 
 
 messages_blueprint = Blueprint('messages', __name__, template_folder='templates/mail')
@@ -11,14 +12,17 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 @messages_blueprint.route('/inbox')
 @login_required
 def inbox():
-    messages = Message.query.filter_by(receiver_id=current_user.id).all()
+    messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
+                                    Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
     return render_template('inbox.html', messages=messages)
 
 
 @messages_blueprint.route('/inbox_sent')
 @login_required
 def sent_messages():
-    messages = Message.query.filter_by(sender_id=current_user.id).all()
+    messages = Message.query.filter(and_(Message.sender_id == current_user.id,
+                                    Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
+
     return render_template('inbox_sent_messages.html', messages=messages)
 
 
@@ -48,16 +52,35 @@ def view_message(message_id):
     return render_template('message.html', message=message)
 
 
-@messages_blueprint.route('/delete_message/<int:message_id>', methods=['GET', 'POST'])
+@messages_blueprint.route('/delete_inbox_message/<int:message_id>', methods=['GET', 'POST'])
 @login_required
-def delete_message(message_id):
+def delete_inbox_message(message_id):
     message = Message.query.get_or_404(message_id)
     if message.receiver_id != current_user.id:
         abort(403)
 
-    db.session.delete(message)
-    db.session.commit()
-    flash('Message deleted!')
+    if message.MESSAGE_VISIBLE_TO is not None:
+        db.session.delete(message)
+        db.session.commit()
+    else:
+        message.MESSAGE_VISIBLE_TO = message.receiver_id
+        db.session.commit()
     return redirect(url_for('messages.inbox'))
+
+
+@messages_blueprint.route('/delete_sent_message/<int:message_id>', methods=['GET', 'POST'])
+@login_required
+def delete_sent_message(message_id):
+    message = Message.query.get_or_404(message_id)
+    if message.sender_id != current_user.id:
+        abort(403)
+
+    if message.MESSAGE_VISIBLE_TO is not None:
+        db.session.delete(message)
+        db.session.commit()
+    else:
+        message.MESSAGE_VISIBLE_TO = message.sender_id
+        db.session.commit()
+    return redirect(url_for('messages.sent_messages'))
 
 

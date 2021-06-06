@@ -18,12 +18,12 @@
           <div class="card-body">
             <h6 class="card-title">From: {{ message.sender.username|capitalize }} Title: {{ message.title|capitalize }}</h6><label class="card-subtitle mb-2 text-muted">{{ message.date.strftime("%d-%B-%Y") }}</label>
             <a href="{{ url_for('messages.view_message', message_id=message.id) }}" class="card-link">Check Message</a>
-                        <button type="button"
-                        class="btn btn-outline-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#del_message">
-                    Delete Message
-                </button>
+            <button type="button"
+                class="btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#del_message">
+                  Delete Message
+            </button>
             <div class="modal" tabindex="-1" id="del_message">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -37,7 +37,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
 
-                    <form action="{{ url_for('messages.delete_message', message_id=message.id) }}">
+                    <form action="{{ url_for('messages.delete_inbox_message', message_id=message.id) }}">
                         <input type="submit" value="Delete" class="btn btn-danger">
                     </form>
 

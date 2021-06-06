@@ -113,6 +113,8 @@ class Message(db.Model):
     text = db.Column(db.Text, nullable=False, index=True)
     seen = db.Column(db.Boolean, nullable=False, default=False, index=True)
 
+    MESSAGE_VISIBLE_TO = db.Column(db.Integer, nullable=True)
+
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
