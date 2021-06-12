@@ -49,6 +49,8 @@ def create_message():
 @login_required
 def view_message(message_id):
     message = Message.query.get_or_404(message_id)
+    message.seen = True
+    db.session.commit()
     return render_template('message.html', message=message)
 
 

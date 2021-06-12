@@ -3,10 +3,13 @@
 {% block content %}
   <div class="jumbotron">
     <h1>Message</h1>
-    <h4>From: {{ message.sender.username|capitalize }}</h4>
-    <h5>Title: {{ message.title }}</h5>
-    <h5>Date Sent: {{ message.date.strftime("%d/%m/%Y, %H:%M:%S") }}</h5>
-    <p>Message: {{ message.text }}</p>
+    <h5>From: <span class="not_bold_span">{{ message.sender.username|capitalize }}</span></h5>
+    <h5>Title: <span class="not_bold_span">{{ message.title }}</span></h5>
+    <h6>Date Sent: <span class="not_bold_span">{{ message.date.strftime("%d/%m/%Y, %H:%M:%S") }}</span></h6>
+    <div class="message_block">
+      <p>{{ message.text }}</p>
+    </div>
+    
     <a href="{{ url_for('messages.create_message') }}" class="btn btn-warning">Replay</a>
   </div>
 

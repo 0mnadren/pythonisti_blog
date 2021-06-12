@@ -4,20 +4,22 @@
 
     <div class="jumbotron">
         <h1>{{ title }}</h1>
-        <h2>
+        <h5>
             Written by:
-            <img src="{{ url_for('static', filename='profile_pics/'+post.author.profile_image) }}" height="50" width="50" alt="Profile Picture">
-            <a href="{{ url_for('users.user_posts', username=post.author.username) }}">
+            <img src="{{ url_for('static', filename='profile_pics/'+post.author.profile_image) }}" height="40" width="40" alt="Profile Picture">
+            <a href="{{ url_for('users.user_posts', username=post.author.username) }}" class="author_name_link">
                 {{ post.author.username|capitalize }}
             </a>
-        </h2>
-        <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
-        <p>{{ post.text }}</p>
+        </h5>
+        <h6>Published: {{ date.strftime("%d-%B-%Y") }}</h6>
+        <div class="main_post">
+          <p>{{ post.text }}</p>
+        </div>
 
         {% if post.author == current_user %}
             <div>
-                <a href="{{ url_for('comments.create_comment', blog_post_id=post.id) }}" class="btn btn-outline-primary">Write Comment</a>
-                <a href="{{ url_for('blogs.update_post', blog_post_id=post.id) }}" class="btn btn-primary">Update Post</a>
+                <a href="{{ url_for('comments.create_comment', blog_post_id=post.id) }}" class="btn btn-outline-primary blue_btn">Write Comment</a>
+                <a href="{{ url_for('blogs.update_post', blog_post_id=post.id) }}" class="btn btn-warning">Update Post</a>
                 <button type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
@@ -27,12 +29,11 @@
             </div>
         {% else %}
             <div>
-                <a href="{{ url_for('comments.create_comment', blog_post_id=post.id) }}" class="btn btn-outline-primary">Write Comment</a>
+                <a href="{{ url_for('comments.create_comment', blog_post_id=post.id) }}" class="btn btn-outline-primary blue_btn">Write Comment</a>
             </div>
         {% endif %}
+        <hr>
     </div>
-
-    <br>
 
     <div class="modal" tabindex="-1" id="del_modal">
       <div class="modal-dialog">
@@ -58,20 +59,23 @@
     </div>
 
     {% for comment in comments %}
-    <div class="jumbotron">
-        <h3>
-            Written by:
+    <div class="jumbotron mt-5">
+        <h6>
+            Written: {{ date.strftime("%d-%B-%Y") }}
+            by
             <img src="{{ url_for('static', filename='profile_pics/'+comment.comment_author.profile_image) }}" height="30" width="30" alt="Profile Picture">
             <a href="{{ url_for('users.user_posts', username=comment.comment_author.username) }}">
                 {{ comment.comment_author.username|capitalize }}
             </a>
-        </h3>
-        <h4>Published: {{ date.strftime("%d-%B-%Y") }}</h4>
-        <p>{{ comment.text }}</p>
+        </h6>
+        <div class="post_comments">
+          <p>{{ comment.text }}</p>
+        </div>
+        
     </div>
         {% if comment.comment_author == current_user %}
             <div>
-                <a href="{{ url_for('comments.update_comment', comment_id=comment.id) }}" class="btn btn-outline-primary">Update Comment</a>
+                <a href="{{ url_for('comments.update_comment', comment_id=comment.id) }}" class="btn btn-outline-primary blue_btn">Update Comment</a>
                 <button type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
@@ -102,5 +106,7 @@
         </div>
             </div>
         {% endif %}
+        <hr>
     {% endfor %}
+    
 {% endblock %}

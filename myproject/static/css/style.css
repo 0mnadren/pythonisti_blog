@@ -1,0 +1,145 @@
+:root {
+    --white_letters: #e6e8ea;
+    --yellow: #ffdf76;
+    --dark_yellow: #e3bb09;
+    --light_blue: #75a8d3;
+    --blue: #3776a6;
+    --dark_blue: #2d618c;
+    --dark_letters: #444;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: 0.3s;
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark_blue);
+}
+
+a:hover {
+    color: var(--dark_blue);
+}
+
+label {
+    color: var(--dark_letters);
+}
+
+p {
+    margin: 0;
+}
+
+.container {
+    height: 100%;
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar-brand {
+    margin: 0 !important;
+}
+
+.navbar-collapse {
+    height: 100%;
+}
+
+.navbar_link {
+    color: var(--dark_blue) !important;
+    height: 100%;
+    font-weight: bold;
+    padding: 1rem 1rem;
+}
+
+.navbar_link:hover {
+    background-color: var(--dark_yellow) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler{
+    border-color: var(--dark_blue) !important;
+}
+
+.navbar-toggler-icon {
+    color: var(--dark_blue) !important;
+}
+
+h1 {
+    color: var(--dark_blue);
+    margin-bottom: 1.5rem;
+}
+
+.card_post {
+    border: 2px solid var(--dark_yellow) !important;
+}
+
+.card_post:hover {
+    transform: scale(1.05);
+    -webkit-box-shadow: 12px 11px 6px -1px rgba(227,187,9,0.94);
+    -moz-box-shadow: 12px 11px 6px -1px rgba(227,187,9,0.94);
+    box-shadow: 12px 11px 6px -1px rgba(227,187,9,0.94);
+    /* -webkit-box-shadow: 15px 11px 6px -1px rgba(227,187,9,0.94);
+    -moz-box-shadow: 15px 11px 6px -1px rgba(227,187,9,0.94);
+    box-shadow: 15px 11px 6px -1px rgba(227,187,9,0.94); */
+}
+
+.blue_btn:hover {
+    background-color: var(--light_blue) !important;
+}
+
+.form-control-textarea {
+    height: 12rem;
+}
+
+.author_name_link {
+    font-weight: bold;
+    color: var(--dark_blue);
+}
+
+.author_name_link:hover {
+    text-decoration: underline;
+}
+
+.main_post {
+    border: 1px solid var(--dark_blue);
+    padding: 0.8rem;
+    margin: 1.2rem auto;
+}
+
+.post_comments {
+    border: 1px solid rgba(0,0,0,0.4);
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.check_message_link {
+    font-weight: bold;
+    margin: auto 0.5rem;
+}
+
+.check_message_link:hover {
+    text-decoration: underline;
+}
+
+.message_block {
+    border: 1px solid var(--blue);
+    padding: 0.8rem;
+    margin: 1rem auto;
+}
+
+.not_bold_span {
+    font-weight: 100;
+}

@@ -7,7 +7,7 @@ cores_blueprint = Blueprint('core', __name__)
 @cores_blueprint.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    blog_posts = Blog.query.order_by(Blog.date.desc()).paginate(page=page, per_page=10)
+    blog_posts = Blog.query.order_by(Blog.date.desc()).paginate(page=page, per_page=8)
     return render_template('index.html', blog_posts=blog_posts)
 
 

@@ -6,23 +6,26 @@
   </div>
 
   {% for post in blog_posts.items %}
-    <div class="card">
+  <a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}">
+    <div class="card card_post">
       <div class="card-body">
         <h2>
-          <a class="card-title" href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a>
+          {{ post.title }}
         </h2>
-        Writtent By:
+        <label>Writtent By:</label>
+        
            <img src="{{ url_for('static', filename='profile_pics/'+post.author.profile_image) }}" height="30" width="30" alt="Profile Picture">
-            <a href="{{ url_for('users.user_posts', username=post.author.username) }}">
+            <a class='author_name_link' href="{{ url_for('users.user_posts', username=post.author.username) }}">
                 {{ post.author.username|capitalize }}
             </a>
         <p>Published on: {{ post.date.strftime("%d-%B-%Y") }}</p>
-        <a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}" class="btn btn-outline-primary">
+        <a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}" class="btn btn-outline-primary blue_btn">
           Read Blog Post
         </a>
       </div>
     </div>
     <br>
+  </a>
   {% endfor %}
   <nav aria-label="Page Navigation example">
      <ul class="pagination justify-content-center">

@@ -4,14 +4,15 @@
   <div class="container">
     <div align='center' class="jumbotron">
       <h1>Welcome to {{ user.username|capitalize }}'s posts</h1>
-      <img src="{{ url_for('static', filename='profile_pics/'+user.profile_image) }}" alt="profile picture" width="200" height="200">
+      <img src="{{ url_for('static', filename='profile_pics/'+user.profile_image) }}" alt="profile picture" width="150" height="150">
     </div>
     {% for post in blog_posts.items %}
-      <h2><a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h2>
+      <h4><a href="{{ url_for('blogs.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a></h4>
       Written By: <a href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username|capitalize }}</a>
-      <p class="text-muted">Published on: {{ post.date.strftime("%d-%B-%Y") }}</p>
-      <hr>
-      <p>{{ post.text }}</p>
+      <p class="text-muted mb-2">Published on: {{ post.date.strftime("%d-%B-%Y") }}</p>
+      <div class="post_comments">
+        <p>{{ post.text }}</p>
+      </div>
       <hr>
     {% endfor %}
   </div>
