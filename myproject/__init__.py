@@ -8,8 +8,7 @@ from flask_jwt import JWT
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-
+load_dotenv('.env')
 
 login_manager = LoginManager()
 app = Flask(__name__)
