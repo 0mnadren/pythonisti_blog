@@ -5,12 +5,16 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_restful import Api
 from flask_jwt import JWT
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 login_manager = LoginManager()
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'mysecretkey'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 #################################
 ######## DATABASE SETUP #########

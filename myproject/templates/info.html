@@ -3,5 +3,20 @@
 {% block content %}
   <div class="jumbotron">
     <h1>About ME</h1>
+    <p>Hello! My name is Nemanja Davidović, and I'm a Python Software Developer.</p>
+    <p class="mb-3">I like to build and learn new things. This project is built using Flask Library. It has many features: </p>
+    <ul>
+      <li>Blog posting and commenting</li>
+      <li>User account</li>
+      <li>Authentication system</li>
+      <li>Mail base app</li>
+    </ul>
+
+    <p>If you want to see more of my projects hop on to my<a class="check_message_link" href="https://nemanjadavidovic.pythonanywhere.com/" target="_blank">Portfolio site!</a></p>
   </div>
+<div class="jumbotron mt-4">
+  <h2 style="color: var(--dark_blue);">API</h2>
+  <p>To see a list of blogs go to this endpoint <strong>/api/blogs</strong></p>
+  <p>For specific blog go to this endpoint <strong>/api/blog/{int:id}</strong></p>
+</div>
 {% endblock %}
