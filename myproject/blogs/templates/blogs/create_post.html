@@ -8,6 +8,13 @@
       <div class="mb-3">
         {{ form.title.label(class="form-label") }} {{ form.title(class="form-control") }}
       </div>
+      {% if form.title.errors %}
+          <ul class="errors mt-2">
+            {% for error in form.title.errors %}
+              <li class="text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       <div class="mb-3">
         {{ form.text.label(class="form-label") }} {{ form.text(class="form-control form-control-textarea") }}
       </div>

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, Blueprint, flash, abort
+from flask import render_template, redirect, url_for, Blueprint, flash, abort, request
 from flask_login import current_user, login_required
 from myproject import db
 from myproject.models import Message, User
@@ -14,7 +14,11 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 def inbox():
     messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
                                     Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
-    return render_template('inbox.html', messages=messages)
+
+    # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
+
+    users = User.query.all()
+    return render_template('inbox.html', messages=messages, users=users)
 
 
 @messages_blueprint.route('/inbox_sent')
@@ -23,20 +27,22 @@ def sent_messages():
     messages = Message.query.filter(and_(Message.sender_id == current_user.id,
                                     Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
 
-    return render_template('inbox_sent_messages.html', messages=messages)
+    users = User.query.all()
+
+    return render_template('inbox_sent_messages.html', messages=messages, users=users)
 
 
 @messages_blueprint.route('/message_create', methods=['GET', 'POST'])
 @login_required
 def create_message():
     form = MessageForm()
-    form.receiver.choices = [(user.id, user.username) for user in User.query.all() if user.id != current_user.id]
     if form.validate_on_submit():
+        receiver = User.query.filter_by(username=form.receiver.data.lower()).first()
         message = Message(
             title=form.title.data,
             text=form.text.data,
             sender_id=current_user.id,
-            receiver_id=form.receiver.data
+            receiver_id=receiver.id
         )
         db.session.add(message)
         db.session.commit()

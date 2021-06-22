@@ -7,6 +7,13 @@
       {{ form.hidden_tag() }}
       <div class="mb-3">
         {{ form.receiver.label(class="form-label") }} {{ form.receiver(class="form-control") }}
+        {% if form.receiver.errors %}
+          <ul class="errors mt-2">
+            {% for error in form.receiver.errors %}
+              <li class="text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
       <div class="mb-3">
         {{ form.title.label(class="form-label") }} {{ form.title(class="form-control") }}

@@ -8,7 +8,6 @@ from myproject.blogs.forms import BlogPostForm
 blogs_blueprint = Blueprint('blogs', __name__, template_folder='templates/blogs')
 
 
-# Create
 @blogs_blueprint.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_post():

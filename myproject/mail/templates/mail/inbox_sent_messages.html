@@ -12,7 +12,7 @@
     <a href="{{ url_for('messages.sent_messages') }}"><h5>Sent</h5></a>
   </div>
 
-    <div class="col-md-10">
+    <div class="col-md-10 overflow_div">
       {% for message in messages %}
       {% if current_user.id == message.sender.id %}
         <div class="card mb-3" style="width: 100%;">

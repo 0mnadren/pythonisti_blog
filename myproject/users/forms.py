@@ -7,6 +7,16 @@ from flask_wtf.file import FileField, FileAllowed
 from myproject.models import User
 
 
+def check_email(self, field):
+    if User.query.filter_by(email=field.data).first():
+        raise ValidationError('Your email has been registered already!')
+
+
+def check_username(self, field):
+    if User.query.filter_by(username=field.data).first():
+        raise ValidationError('Username already taken!')
+
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
@@ -14,37 +24,24 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email()])
+    email = StringField('Email', validators=[InputRequired(), Email(), check_email])
     username = StringField('Username', validators=[InputRequired(),
-                                                   Length(min=4, max=24, message='Minimum length is 4 letters')])
+                                                   Length(min=4, max=24, message='Minimum length is 4 letters'),
+                                                   check_username])
     password = PasswordField('Password', validators=[InputRequired(),
                                                      EqualTo('confirm_pass', message='Passwords must match'),
                                                      Length(min=8, max=24, message='Minimum length of a password is 8')])
     confirm_pass = PasswordField('Confirm Password', validators=[InputRequired()])
     submit = SubmitField('Register')
 
-    def check_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Your email has been registered already!')
-
-    def check_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already taken!')
-
 
 class UpdateUserForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email()])
+    email = StringField('Email', validators=[InputRequired(), Email(), check_email])
     username = StringField('Username', validators=[InputRequired(),
-                                                   Length(min=4, max=24, message='Minimum length is 4 letters')])
+                                                   Length(min=4, max=24, message='Minimum length is 4 letters'),
+                                                   check_username])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
-    def check_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Your email has been registered already!')
-
-    def check_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already taken!')
 
 
