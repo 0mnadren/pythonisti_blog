@@ -33,10 +33,10 @@
             <button type="button"
                 class="btn btn-outline-danger"
                 data-bs-toggle="modal"
-                data-bs-target="#del_message">
+                data-bs-target="#del_message{{ message.id }}">
                   Delete Message
             </button>
-            <div class="modal" tabindex="-1" id="del_message">
+            <div class="modal" tabindex="-1" id="del_message{{ message.id }}">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
