@@ -4,7 +4,6 @@ from myproject import db
 from myproject.models import Message, User
 from myproject.mail.forms import MessageForm
 from sqlalchemy import and_
-from sqlalchemy.exc import ProgrammingError
 
 
 messages_blueprint = Blueprint('messages', __name__, template_folder='templates/mail')
@@ -13,15 +12,13 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 @messages_blueprint.route('/inbox')
 @login_required
 def inbox():
-    try:
-        messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
-                                        Message.MESSAGE_VISIBLE_TO.isnot(int(current_user.id)))).all()
+    messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
+                                    Message.MESSAGE_VISIBLE_TO.isnot(int(current_user.id)))).all()
+
     # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
-    except ProgrammingError:
-        messages = []
-    finally:
-        users = User.query.all()
-        return render_template('inbox.html', messages=messages, users=users)
+
+    users = User.query.all()
+    return render_template('inbox.html', messages=messages, users=users)
 
 
 @messages_blueprint.route('/inbox_sent')
