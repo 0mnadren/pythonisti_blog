@@ -16,12 +16,10 @@ def inbox():
     try:
         messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
                                         Message.MESSAGE_VISIBLE_TO.isnot(int(current_user.id)))).all()
+    # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
     except ProgrammingError:
         messages = []
     finally:
-
-    # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
-
         users = User.query.all()
         return render_template('inbox.html', messages=messages, users=users)
 
