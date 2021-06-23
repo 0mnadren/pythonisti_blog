@@ -13,7 +13,7 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 @login_required
 def inbox():
     messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
-                                    Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
+                                    Message.MESSAGE_VISIBLE_TO.isnot(str(current_user.id)))).all()
 
     # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
 
@@ -25,7 +25,7 @@ def inbox():
 @login_required
 def sent_messages():
     messages = Message.query.filter(and_(Message.sender_id == current_user.id,
-                                    Message.MESSAGE_VISIBLE_TO.isnot(current_user.id))).all()
+                                    Message.MESSAGE_VISIBLE_TO.isnot(str(current_user.id)))).all()
 
     users = User.query.all()
 
