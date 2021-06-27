@@ -12,8 +12,8 @@ messages_blueprint = Blueprint('messages', __name__, template_folder='templates/
 @messages_blueprint.route('/inbox')
 @login_required
 def inbox():
-    messages = Message.query.filter(and_(Message.receiver_id == current_user.id,
-                                    Message.MESSAGE_VISIBLE_TO.isnot(int(current_user.id)))).all()
+    messages = Message.query.filter(Message.receiver_id == int(current_user.id),
+                                    Message.MESSAGE_VISIBLE_TO != (int(current_user.id))).all()
 
     # Ako MESSAGE_VISIBLE_TO == current_user.id to znaci da je on vec kliknuo na DELETE MESSAGE!
 
@@ -24,8 +24,8 @@ def inbox():
 @messages_blueprint.route('/inbox_sent')
 @login_required
 def sent_messages():
-    messages = Message.query.filter(and_(Message.sender_id == current_user.id,
-                                    Message.MESSAGE_VISIBLE_TO.isnot(int(current_user.id)))).all()
+    messages = Message.query.filter(Message.sender_id == int(current_user.id),
+                                    Message.MESSAGE_VISIBLE_TO != (int(current_user.id))).all()
 
     users = User.query.all()
 
