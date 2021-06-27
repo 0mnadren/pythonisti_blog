@@ -9,7 +9,7 @@
     <a href="{{ url_for('messages.create_message') }}" class="btn btn-warning">Compose</a>
     <hr> 
     <a href="{{ url_for('messages.inbox') }}"><h5>Inbox</h5></a>
-    <a href="{{ url_for('messages.sent_messages') }}"><h5>Sent</h5></a>
+    <a href="{{ url_for('messages.sent_messages') }}"><h5 class="mb-4">Sent</h5></a>
     <div class="user_list_div">
       <ul><span class='user_list_span'>Users:</span>
         {% for user in users %}

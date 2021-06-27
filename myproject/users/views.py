@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, Blueprint,
 from flask_login import login_required, login_user, current_user, logout_user
 from myproject import db
 from myproject.models import User, Blog
-from myproject.users.forms import LoginForm, RegisterForm, UpdateUserForm
+from myproject.users.forms import LoginForm, RegisterForm, UpdateUserForm, UpdateImageForm
 from myproject.users.picture_handler import add_profile_pic
 
 
@@ -23,7 +23,7 @@ def register():
     if form.validate_on_submit():
         user = User(
             email=form.email.data,
-            username=form.username.data,
+            username=form.username.data.lower(),
             password=form.password.data
         )
         db.session.add(user)
@@ -54,24 +54,29 @@ def login():
 @users_blueprint.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    form = UpdateUserForm()
-    if form.validate_on_submit():
-        if form.picture.data:  # If user uploaded pic
-            username = current_user.username
-            pic = add_profile_pic(form.picture.data, username)
-            current_user.profile_image = pic
-
-        current_user.username = form.username.data
-        current_user.email = form.email.data
+    user_form = UpdateUserForm()
+    image_form = UpdateImageForm()
+    if user_form.validate_on_submit():
+        current_user.username = user_form.username.data.lower()
+        current_user.email = user_form.email.data
         db.session.commit()
         flash('User Account Updated!')
         return redirect(url_for('users.account'))
     elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
+        user_form.username.data = current_user.username
+        user_form.email.data = current_user.email
+
+    if image_form.validate_on_submit():
+        if image_form.picture.data:  # If user uploaded pic
+            username = current_user.username
+            pic = add_profile_pic(image_form.picture.data, username)
+            current_user.profile_image = pic
+            db.session.commit()
+            flash('User Image Updated!')
+            return redirect(url_for('users.account'))
 
     profile_image = url_for('static', filename='profile_pics/'+current_user.profile_image)
-    return render_template('account.html', profile_image=profile_image, form=form)
+    return render_template('account.html', profile_image=profile_image, user_form=user_form, image_form=image_form)
 
 
 @users_blueprint.route('/account/delete', methods=['GET', 'POST'])

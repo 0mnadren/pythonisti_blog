@@ -36,12 +36,24 @@ class RegisterForm(FlaskForm):
 
 
 class UpdateUserForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email(), check_email])
+    email = StringField('Email', validators=[InputRequired(), Email()])
     username = StringField('Username', validators=[InputRequired(),
-                                                   Length(min=4, max=24, message='Minimum length is 4 letters'),
-                                                   check_username])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+                                                   Length(min=4, max=24, message='Minimum length is 4 letters')])
+    # picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
+    def validate_email(self, field):
+        # Check if not None for that user email!
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Your email has been registered already!')
 
+    def validate_username(self, field):
+        # Check if not None for that username!
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Sorry, that username is taken!')
+
+
+class UpdateImageForm(FlaskForm):
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Update Image')
 

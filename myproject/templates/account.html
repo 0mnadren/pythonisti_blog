@@ -13,35 +13,41 @@
     </div>
     <div class="container">
         <form method="POST" action="" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
+            {{ image_form.hidden_tag() }}
             <div class="mb-3">
-                {{ form.username.label(class="form-label") }} {{ form.username(class="form-control") }}
-                {% if form.username.errors %}
-                  <ul class="errors mt-2">
-                    {% for error in form.username.errors %}
-                      <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-            </div>
-            <div class="mb-3">
-                {{ form.email.label(class="form-label") }} {{ form.email(class="form-control") }}
-                {% if form.email.errors %}
-                   <ul class="errors mt-2">
-                    {% for error in form.email.errors %}
-                      <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-            </div>
-            <div class="mb-3">
-                {{ form.picture.label(class="form-label") }} {{ form.picture(class="form-control") }}
+                {{ image_form.picture.label(class="form-label") }} {{ image_form.picture(class="form-control") }}
                 <div class="form-text">
                     Picture must be .jpg or .png
                 </div>
             </div>
             <div class="mb-3">
-                {{ form.submit(class="btn btn-primary") }}
+                {{ image_form.submit(class="btn btn-warning") }}
+            </div>
+        </form>
+        <form method="POST" action="">
+            {{ user_form.hidden_tag() }}
+            <div class="mb-3">
+                {{ user_form.username.label(class="form-label") }} {{ user_form.username(class="form-control") }}
+                {% if user_form.username.errors %}
+                  <ul class="errors mt-2">
+                    {% for error in user_form.username.errors %}
+                      <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ user_form.email.label(class="form-label") }} {{ user_form.email(class="form-control") }}
+                {% if user_form.email.errors %}
+                   <ul class="errors mt-2">
+                    {% for error in user_form.email.errors %}
+                      <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ user_form.submit(class="btn btn-primary") }}
                 <button type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
@@ -50,6 +56,7 @@
                 </button>
             </div>
         </form>
+
     </div>
     <div class="modal" tabindex="-1" id="del_account">
       <div class="modal-dialog">
